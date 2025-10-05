@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sum with Closure</title>
+    <title>Interactive Sum with Closure</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,19 +13,16 @@
             padding: 50px;
             background-color: #f0f4f8;
         }
-
         h1 {
             color: #4b0082;
             margin-bottom: 20px;
         }
-
         input {
             padding: 8px;
             font-size: 16px;
-            width: 100px;
+            width: 120px;
             margin-right: 10px;
         }
-
         button {
             padding: 8px 15px;
             font-size: 16px;
@@ -36,11 +33,9 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-
         button:hover {
             background-color: #a166f5;
         }
-
         #result {
             margin-top: 20px;
             font-size: 20px;
@@ -49,13 +44,39 @@
     </style>
 </head>
 <body>
-    <h1>Sum with Closure</h1>
+    <h1>Interactive Sum with Closure</h1>
     <div>
         <input type="number" id="numInput" placeholder="Enter a number">
         <button id="addBtn">Add</button>
     </div>
     <div id="result">Result: 0</div>
 
-    <script src="script.js"></script>
+    <script>
+        const sum = (function() {
+            let total = 0;
+            return function(num) {
+                total += num;
+                return total;
+            };
+        })();
+
+        const numInput = document.getElementById('numInput');
+        const addBtn = document.getElementById('addBtn');
+        const resultDiv = document.getElementById('result');
+
+        addBtn.addEventListener('click', function() {
+            const num = Number(numInput.value);
+            if (!isNaN(num) && num > 0 && Number.isInteger(num)) {
+                const currentTotal = sum(num);
+                resultDiv.textContent = `Result: ${currentTotal}`;
+                numInput.value = '';
+                numInput.focus();
+            } else {
+                alert('Please enter a valid positive integer');
+                numInput.value = '';
+                numInput.focus();
+            }
+        });
+    </script>
 </body>
 </html>
