@@ -1,17 +1,25 @@
 const sum = (function() {
     let total = 0;
-    return function(num, callback) {
+    return function(num) {
         total += num;
-        if (callback && typeof callback === 'function') callback(total);
         return total;
     };
 })();
 
-function showResult(result) {
-    alert(`Result: ${result}`);
-}
+const numInput = document.getElementById('numInput');
+const addBtn = document.getElementById('addBtn');
+const resultDiv = document.getElementById('result');
 
-sum(4, showResult);
-sum(6, showResult);
-sum(10, showResult);
-sum(7, showResult);
+addBtn.addEventListener('click', function() {
+    const num = Number(numInput.value);
+    if (!isNaN(num) && num > 0 && Number.isInteger(num)) {
+        const currentTotal = sum(num);
+        resultDiv.textContent = `Result: ${currentTotal}`;
+        numInput.value = '';
+        numInput.focus();
+    } else {
+        alert('Please enter a valid positive integer');
+        numInput.value = '';
+        numInput.focus();
+    }
+});
